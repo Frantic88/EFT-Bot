@@ -1,0 +1,176 @@
+[14/12/2017 04:27] INFO scheduler _scheduler_repeat 180: add purge_test "cleanup after 390690411720605696" to cleanup_test on Unofficial EFT Discord community every 30s
+[14/12/2017 04:27] INFO scheduler run_coro 246: Running 'purge_test' in 146573551246245888
+[14/12/2017 04:28] INFO scheduler run_coro 246: Running 'purge_test' in 146573551246245888
+[14/12/2017 04:28] INFO scheduler run_coro 246: Running 'purge_test' in 146573551246245888
+[14/12/2017 04:29] INFO scheduler run_coro 246: Running 'purge_test' in 146573551246245888
+[14/12/2017 04:29] INFO scheduler run_coro 246: Running 'purge_test' in 146573551246245888
+[14/12/2017 11:29] INFO scheduler _scheduler_repeat 180: add trade_daily_purge "cleanup after 383778076288352257" to eft-trade on Unofficial EFT Discord community every 86400s
+[14/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[15/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[15/12/2017 11:55] ERROR red on_command_error 369: Exception in command 'cleanup after'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\mod.py", line 836, in after
+    await self.mass_purge(to_delete)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\mod.py", line 1286, in mass_purge
+    await self.bot.delete_messages(messages[:100])
+  File "lib\discord\client.py", line 1301, in delete_messages
+    yield from self.http.delete_messages(channel.id, message_ids, guild_id)
+  File "lib\discord\http.py", line 200, in request
+    raise HTTPException(r, data)
+discord.errors.HTTPException: BAD REQUEST (status code: 400): You can only bulk delete messages that are under 14 days old.
+[15/12/2017 13:00] ERROR red on_command_error 369: Exception in command 'dynamicvoice flush'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\dynamicvoice.py", line 112, in flush
+    await self._create_channels(server)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\dynamicvoice.py", line 128, in _create_channels
+    await self.bot.move_channel(channel, self.settings[server.id]['position'])
+  File "lib\discord\client.py", line 2047, in move_channel
+    raise InvalidArgument('Channel position cannot be greater than {}'.format(len(channels) - 1))
+discord.errors.InvalidArgument: Channel position cannot be greater than 1
+[15/12/2017 13:05] ERROR red on_command_error 369: Exception in command 'cog uninstall'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\downloader.py", line 381, in uninstall
+    os.remove(os.path.join("cogs", cog + ".py"))
+FileNotFoundError: [WinError 2] The system cannot find the file specified: 'cogs\\pswdchannel.py'
+[15/12/2017 13:49] ERROR red <module> 634: Fatal exception, attempting graceful logout
+Traceback (most recent call last):
+  File "E:\Python\lib\asyncio\selector_events.py", line 724, in _read_ready
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "lib\aiohttp\client.py", line 202, in _request
+    yield from resp.start(conn, read_until_eof)
+  File "lib\aiohttp\client_reqrep.py", line 640, in start
+    message = yield from httpstream.read()
+  File "lib\aiohttp\streams.py", line 641, in read
+    result = yield from super().read()
+  File "lib\aiohttp\streams.py", line 476, in read
+    yield from self._waiter
+aiohttp.errors.ServerDisconnectedError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "red.py", line 614, in <module>
+    loop.run_until_complete(main(bot))
+  File "E:\Python\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "red.py", line 603, in main
+    yield from bot.connect()
+  File "lib\discord\client.py", line 451, in connect
+    self.ws = yield from DiscordWebSocket.from_client(self, resume=True)
+  File "lib\discord\gateway.py", line 198, in from_client
+    gateway = yield from client.http.get_gateway()
+  File "lib\discord\http.py", line 633, in get_gateway
+    data = yield from self.request(Route('GET', '/gateway'))
+  File "lib\discord\http.py", line 137, in request
+    r = yield from self.session.request(method, url, **kwargs)
+  File "lib\aiohttp\client.py", line 555, in __iter__
+    resp = yield from self._coro
+  File "lib\aiohttp\client.py", line 209, in _request
+    raise aiohttp.ClientResponseError() from exc
+aiohttp.errors.ClientResponseError
+[15/12/2017 13:49] ERROR red <module> 634: Fatal exception, attempting graceful logout
+Traceback (most recent call last):
+  File "E:\Python\lib\asyncio\selector_events.py", line 724, in _read_ready
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "lib\aiohttp\client.py", line 202, in _request
+    yield from resp.start(conn, read_until_eof)
+  File "lib\aiohttp\client_reqrep.py", line 640, in start
+    message = yield from httpstream.read()
+  File "lib\aiohttp\streams.py", line 641, in read
+    result = yield from super().read()
+  File "lib\aiohttp\streams.py", line 476, in read
+    yield from self._waiter
+aiohttp.errors.ServerDisconnectedError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "red.py", line 614, in <module>
+    loop.run_until_complete(main(bot))
+  File "E:\Python\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "red.py", line 603, in main
+    yield from bot.connect()
+  File "lib\discord\client.py", line 451, in connect
+    self.ws = yield from DiscordWebSocket.from_client(self, resume=True)
+  File "lib\discord\gateway.py", line 198, in from_client
+    gateway = yield from client.http.get_gateway()
+  File "lib\discord\http.py", line 633, in get_gateway
+    data = yield from self.request(Route('GET', '/gateway'))
+  File "lib\discord\http.py", line 137, in request
+    r = yield from self.session.request(method, url, **kwargs)
+  File "lib\aiohttp\client.py", line 555, in __iter__
+    resp = yield from self._coro
+  File "lib\aiohttp\client.py", line 209, in _request
+    raise aiohttp.ClientResponseError() from exc
+aiohttp.errors.ClientResponseError
+[16/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[17/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[18/12/2017 03:04] ERROR red on_command_error 369: Exception in command 'voice_gen add'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\voice_channel_generator.py", line 254, in _voice_gen_add
+    await self.check_channels(server, generator, parent_id, self.config[server.id])
+  File "E:\Python_Programs\Red-DiscordBot\cogs\voice_channel_generator.py", line 326, in check_channels
+    ows = self.perms_overwrites[server.id]
+KeyError: '385223241695756289'
+[18/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[18/12/2017 21:33] ERROR red on_command_error 369: Exception in command 'voice_gen add'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\voice_channel_generator.py", line 254, in _voice_gen_add
+    await self.check_channels(server, generator, parent_id, self.config[server.id])
+  File "E:\Python_Programs\Red-DiscordBot\cogs\voice_channel_generator.py", line 326, in check_channels
+    ows = self.perms_overwrites[server.id]
+KeyError: '146573551246245888'
+[18/12/2017 21:36] ERROR red on_command_error 369: Exception in command 'voice_gen reset'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\voice_channel_generator.py", line 119, in _voice_gen_reset
+    await self.bot.get_command("reload").callback(self.bot.get_cog("Owner"), "cogs.voice_channel_generator")
+TypeError: _reload() takes 1 positional argument but 2 were given
+[18/12/2017 23:05] ERROR red on_command_error 369: Exception in command 'voice_gen reset'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\voice_channel_generator.py", line 119, in _voice_gen_reset
+    await self.bot.get_command("reload").callback(self.bot.get_cog("Owner"), "cogs.voice_channel_generator")
+TypeError: _reload() takes 1 positional argument but 2 were given
+[18/12/2017 23:24] ERROR red on_command_error 369: Exception in command 'voice_gen add'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\voice_channel_generator.py", line 254, in _voice_gen_add
+    await self.check_channels(server, generator, parent_id, self.config[server.id])
+  File "E:\Python_Programs\Red-DiscordBot\cogs\voice_channel_generator.py", line 326, in check_channels
+    ows = self.perms_overwrites[server.id]
+KeyError: '146573551246245888'
+[18/12/2017 23:36] ERROR red on_command_error 369: Exception in command 'voice_gen reset'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\Red-DiscordBot\cogs\voice_channel_generator.py", line 119, in _voice_gen_reset
+    await self.bot.get_command("reload").callback(self.bot.get_cog("Owner"), "cogs.voice_channel_generator")
+TypeError: _reload() takes 1 positional argument but 2 were given
+[19/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[20/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[21/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
