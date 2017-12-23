@@ -413,7 +413,7 @@ def interactive_setup(settings):
 
     if not settings.login_credentials:
         while settings.token is None and settings.email is None:
-            if not os.environ['BOT_TOKEN']:  # Assuming token
+            if os.environ['BOT_TOKEN']:  # Assuming token
                 settings.token = os.environ['BOT_TOKEN']
             else:
                 settings.email = os.environ['BOT_EMAIL']
