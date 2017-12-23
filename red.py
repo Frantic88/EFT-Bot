@@ -412,16 +412,12 @@ def interactive_setup(settings):
         print("and obtain your bot's token like described.")
 
     if not settings.login_credentials:
-        print("\nInsert your bot's token:")
         while settings.token is None and settings.email is None:
-            choice = input("> ")
-            if "@" not in choice and len(choice) >= 50:  # Assuming token
-                settings.token = choice
-            elif "@" in choice:
-                settings.email = choice
-                settings.password = input("\nPassword> ")
+            if not os.environ['BOT_TOKEN']:  # Assuming token
+                settings.token = os.environ['BOT_TOKEN']
             else:
-                print("That doesn't look like a valid token.")
+                settings.email = os.environ['BOT_EMAIL']
+                settings.password = os.environ['BOT_PASSWORD']
         settings.save_settings()
 
     if not settings.prefixes:
