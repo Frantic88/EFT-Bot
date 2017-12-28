@@ -7,6 +7,6 @@ data
 !data/autorooms/*
 !data/client_modification/*
 !data/react_roles/*
-!data/sheduler/*
+!data/scheduler/*
 *.exe
 *.dll
