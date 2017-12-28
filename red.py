@@ -426,13 +426,13 @@ def interactive_setup(settings):
               "Can be multiple characters. You will be able to change it "
               "later and add more of them.\nChoose your prefix:")
         confirmation = False
-        while confirmation is False:
-            new_prefix = "/" #ensure_reply("\nPrefix> ").strip()
-            print("\nAre you sure you want {0} as your prefix?\nYou "
-                  "will be able to issue commands like this: {0}help"
-                  "\nType yes to confirm or no to change it".format(
-                      new_prefix))
-            #confirmation = get_answer()
+        #while confirmation is False:
+        new_prefix = "/" #ensure_reply("\nPrefix> ").strip()
+        #    print("\nAre you sure you want {0} as your prefix?\nYou "
+        #          "will be able to issue commands like this: {0}help"
+        #          "\nType yes to confirm or no to change it".format(
+        #              new_prefix))
+        #    #confirmation = get_answer()
         settings.prefixes = [new_prefix]
         settings.save_settings()
 
