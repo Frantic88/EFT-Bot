@@ -533,7 +533,7 @@ def load_cogs(bot):
                 "general", "image", "mod", "streams", "trivia",
                 "autorooms", "client_modification", "massmove",
                 "messagebox", "msgvote", "react_roles", "reactpoll",
-                "reporttool", "scheduler", "spoiler", "voice_channel_generator", "penis")
+                "reporttool", "scheduler", "spoiler", "voice_channel_generator")
 
     try:
         registry = dataIO.load_json("data/red/cogs.json")
