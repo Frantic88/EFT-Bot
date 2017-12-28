@@ -612,18 +612,18 @@ if __name__ == '__main__':
         bot.logger.error(traceback.format_exc())
         if not bot.settings.no_prompt:
             raise RuntimeError()
-			"""choice = input("Invalid login credentials. If they worked before "
-                           "Discord might be having temporary technical "
-                           "issues.\nIn this case, press enter and try again "
-                           "later.\nOtherwise you can type 'reset' to reset "
-                           "the current credentials and set them again the "
-                           "next start.\n> ")
-            if choice.lower().strip() == "reset":
-                bot.settings.token = None
-                bot.settings.email = None
-                bot.settings.password = None
-                bot.settings.save_settings()
-                print("Login credentials have been reset.")"""
+			#choice = input("Invalid login credentials. If they worked before "
+            #               "Discord might be having temporary technical "
+            #               "issues.\nIn this case, press enter and try again "
+            #               "later.\nOtherwise you can type 'reset' to reset "
+            #               "the current credentials and set them again the "
+            #               "next start.\n> ")
+            #if choice.lower().strip() == "reset":
+            #    bot.settings.token = None
+            #    bot.settings.email = None
+            #    bot.settings.password = None
+            #    bot.settings.save_settings()
+            #    print("Login credentials have been reset.")
     except KeyboardInterrupt:
         loop.run_until_complete(bot.logout())
     except Exception as e:
