@@ -10,6 +10,7 @@ name = "pypi"
 "discord.py" = {git = "git://github.com/Rapptz/discord.py.git", extras = ["voice"]}
 youtube_dl = "*"
 imgurpython = "*"
+Pillow = "*"
 
 
 [dev-packages]
