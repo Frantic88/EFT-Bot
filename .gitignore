@@ -4,5 +4,9 @@ __pycache__
 data
 !data/trivia/*
 !data/audio/playlists/*
+!data/autorooms/*
+!data/client_modification/*
+!data/react_roles/*
+!data/sheduler/*
 *.exe
 *.dll
