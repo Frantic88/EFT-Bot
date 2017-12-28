@@ -391,8 +391,11 @@ class AutoRooms:
                 channel = memb_before.voice.voice_channel
                 if channel.id in b_cache:
                     if len(channel.voice_members) == 0:
-                        await self.bot.delete_channel(channel)
-                        self.settingscleanup(b_server)
+                        try:
+							await self.bot.delete_channel(channel)
+                        except discord.NotFound:
+							pass
+						self.settingscleanup(b_server)
 
     async def _clone_channel(self, origin, new_name):
         """I can support channel categories"""
