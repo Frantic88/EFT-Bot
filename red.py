@@ -529,7 +529,7 @@ def set_cog(cog, value):  # TODO: move this out of red.py
 
 
 def load_cogs(bot):
-    defaults = ("alias", "customcom", "downloader", "economy",
+    defaults = ("alias", "customcom", "downloader", "economy", # Add new cogs here!
                 "general", "image", "mod", "streams", "trivia",
                 "autorooms", "client_modification", "massmove",
                 "messagebox", "msgvote", "react_roles", "reactpoll",
