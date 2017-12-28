@@ -174,3 +174,20 @@ TypeError: _reload() takes 1 positional argument but 2 were given
 [19/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
 [20/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
 [21/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[23/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[24/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[25/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[26/12/2017 03:17] ERROR red on_command_error 369: Exception in command 'massmove'
+Traceback (most recent call last):
+  File "lib\discord\ext\commands\core.py", line 50, in wrapped
+    ret = yield from coro(*args, **kwargs)
+  File "E:\Python_Programs\EFT-Bot\cogs\massmove.py", line 28, in massmove
+    await self._massmove(ctx, from_channel, to_channel)
+  File "E:\Python_Programs\EFT-Bot\cogs\massmove.py", line 47, in _massmove
+    await self.bot.move_member(member, to_channel)
+  File "lib\discord\client.py", line 3132, in move_member
+    raise InvalidArgument('The channel provided must be a voice channel.')
+discord.errors.InvalidArgument: The channel provided must be a voice channel.
+[26/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[27/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[28/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
