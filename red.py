@@ -432,7 +432,7 @@ def interactive_setup(settings):
                   "will be able to issue commands like this: {0}help"
                   "\nType yes to confirm or no to change it".format(
                       new_prefix))
-            confirmation = get_answer()
+            #confirmation = get_answer()
         settings.prefixes = [new_prefix]
         settings.save_settings()
 
