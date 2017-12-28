@@ -427,7 +427,7 @@ def interactive_setup(settings):
               "later and add more of them.\nChoose your prefix:")
         confirmation = False
         while confirmation is False:
-            new_prefix = ensure_reply("\nPrefix> ").strip()
+            new_prefix = "/" #ensure_reply("\nPrefix> ").strip()
             print("\nAre you sure you want {0} as your prefix?\nYou "
                   "will be able to issue commands like this: {0}help"
                   "\nType yes to confirm or no to change it".format(
@@ -440,7 +440,7 @@ def interactive_setup(settings):
         print("\nInput the admin role's name. Anyone with this role in Discord"
               " will be able to use the bot's admin commands")
         print("Leave blank for default name (Transistor)")
-        settings.default_admin = input("\nAdmin role> ")
+        settings.default_admin = "Admin" #input("\nAdmin role> ")
         if settings.default_admin == "":
             settings.default_admin = "Transistor"
         settings.save_settings()
@@ -448,7 +448,7 @@ def interactive_setup(settings):
         print("\nInput the moderator role's name. Anyone with this role in"
               " Discord will be able to use the bot's mod commands")
         print("Leave blank for default name (Process)")
-        settings.default_mod = input("\nModerator role> ")
+        settings.default_mod = "Moderator" #input("\nModerator role> ")
         if settings.default_mod == "":
             settings.default_mod = "Process"
         settings.save_settings()
@@ -459,7 +459,7 @@ def interactive_setup(settings):
               "Please read this guide for a good overview on how Red works:\n"
               "https://twentysix26.github.io/Red-Docs/red_getting_started/\n"
               "Press enter to continue")
-        input("\n")
+        #input("\n")
 
 
 def set_logger(bot):
@@ -611,7 +611,8 @@ if __name__ == '__main__':
     except discord.LoginFailure:
         bot.logger.error(traceback.format_exc())
         if not bot.settings.no_prompt:
-            choice = input("Invalid login credentials. If they worked before "
+            raise RuntimeError()
+			"""choice = input("Invalid login credentials. If they worked before "
                            "Discord might be having temporary technical "
                            "issues.\nIn this case, press enter and try again "
                            "later.\nOtherwise you can type 'reset' to reset "
@@ -622,7 +623,7 @@ if __name__ == '__main__':
                 bot.settings.email = None
                 bot.settings.password = None
                 bot.settings.save_settings()
-                print("Login credentials have been reset.")
+                print("Login credentials have been reset.")"""
     except KeyboardInterrupt:
         loop.run_until_complete(bot.logout())
     except Exception as e:
