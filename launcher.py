@@ -250,7 +250,7 @@ def requirements_menu():
             if IS_64BIT:
                 print("4. Install ffmpeg 64bit (recommended on Windows 64bit)")
         print("\n0. Go back")
-        choice = user_choice()
+        choice = 1 #user_choice()
         if choice == "1":
             install_reqs(audio=True)
             wait()
@@ -288,7 +288,7 @@ def update_menu():
         print("\nOthers:")
         print("4. Update pip (might require admin privileges)")
         print("\n0. Go back")
-        choice = user_choice()
+        choice = 1 #user_choice()
         if choice == "1":
             update_red()
             print("Updating requirements...")
@@ -327,7 +327,7 @@ def maintenance_menu():
               " python packages)")
         print("4. Factory reset")
         print("\n0. Go back")
-        choice = user_choice()
+        choice = 0 #user_choice()
         if choice == "1":
             print("Any code modification you have made will be lost. Data/"
                   "non-default cogs will be left intact. Are you sure?")
@@ -525,7 +525,7 @@ def main():
         print("4. Install requirements")
         print("5. Maintenance (repair, reset...)")
         print("\n0. Quit")
-        choice = user_choice()
+        choice = 1 #user_choice() # this thing should be automate, crappy bot need to be rewrited
         if choice == "1":
             run_red(autorestart=True)
         elif choice == "2":
