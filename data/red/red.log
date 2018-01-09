@@ -191,3 +191,50 @@ discord.errors.InvalidArgument: The channel provided must be a voice channel.
 [26/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
 [27/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
 [28/12/2017 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[09/01/2018 15:17] INFO autorooms _room_for 211: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 15:21] ERROR autorooms _cleanup 280: NOT FOUND (status code: 404): Unknown Channel
+Traceback (most recent call last):
+  File "E:\Python_Programs\EFT-Bot\cogs\autorooms.py", line 278, in _cleanup
+    await self.bot.delete_channel(channel)
+  File "lib\discord\client.py", line 2189, in delete_channel
+    yield from self.http.delete_channel(channel.id)
+  File "lib\discord\http.py", line 198, in request
+    raise NotFound(r, data)
+discord.errors.NotFound: NOT FOUND (status code: 404): Unknown Channel
+[09/01/2018 15:23] ERROR autorooms _cleanup 280: NOT FOUND (status code: 404): Unknown Channel
+Traceback (most recent call last):
+  File "E:\Python_Programs\EFT-Bot\cogs\autorooms.py", line 278, in _cleanup
+    await self.bot.delete_channel(channel)
+  File "lib\discord\client.py", line 2189, in delete_channel
+    yield from self.http.delete_channel(channel.id)
+  File "lib\discord\http.py", line 198, in request
+    raise NotFound(r, data)
+discord.errors.NotFound: NOT FOUND (status code: 404): Unknown Channel
+[09/01/2018 15:41] ERROR autorooms _cleanup 276: NOT FOUND (status code: 404): Unknown Channel
+Traceback (most recent call last):
+  File "E:\Python_Programs\EFT-Bot\cogs\autorooms.py", line 274, in _cleanup
+    await self.bot.delete_channel(channel)
+  File "lib\discord\client.py", line 2189, in delete_channel
+    yield from self.http.delete_channel(channel.id)
+  File "lib\discord\http.py", line 198, in request
+    raise NotFound(r, data)
+discord.errors.NotFound: NOT FOUND (status code: 404): Unknown Channel
+[09/01/2018 15:41] INFO autorooms _room_for 208: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 15:49] ERROR autorooms _cleanup 276: NOT FOUND (status code: 404): Unknown Channel
+Traceback (most recent call last):
+  File "E:\Python_Programs\EFT-Bot\cogs\autorooms.py", line 274, in _cleanup
+    await self.bot.delete_channel(channel)
+  File "lib\discord\client.py", line 2189, in delete_channel
+    yield from self.http.delete_channel(channel.id)
+  File "lib\discord\http.py", line 198, in request
+    raise NotFound(r, data)
+discord.errors.NotFound: NOT FOUND (status code: 404): Unknown Channel
+[09/01/2018 15:49] ERROR autorooms _cleanup 276: NOT FOUND (status code: 404): Unknown Channel
+Traceback (most recent call last):
+  File "E:\Python_Programs\EFT-Bot\cogs\autorooms.py", line 274, in _cleanup
+    await self.bot.delete_channel(channel)
+  File "lib\discord\client.py", line 2189, in delete_channel
+    yield from self.http.delete_channel(channel.id)
+  File "lib\discord\http.py", line 198, in request
+    raise NotFound(r, data)
+discord.errors.NotFound: NOT FOUND (status code: 404): Unknown Channel
