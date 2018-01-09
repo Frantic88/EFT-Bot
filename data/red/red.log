@@ -238,3 +238,27 @@ Traceback (most recent call last):
   File "lib\discord\http.py", line 198, in request
     raise NotFound(r, data)
 discord.errors.NotFound: NOT FOUND (status code: 404): Unknown Channel
+[09/01/2018 16:37] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 16:37] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 16:37] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 16:37] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 16:37] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 16:37] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 16:37] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 16:37] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 17:05] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 17:13] INFO autorooms _room_for 174: 141955699461718016 | Frantic has NOT triggered the antispam catcher
+[09/01/2018 17:13] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 17:13] INFO autorooms _room_for 174: 141955699461718016 | Frantic has NOT triggered the antispam catcher
+[09/01/2018 17:14] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 17:14] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 17:14] INFO autorooms _room_for 174: 141955699461718016 | Frantic has NOT triggered the antispam catcher
+[09/01/2018 17:14] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 17:14] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 17:14] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 17:14] INFO autorooms _room_for 170: 141955699461718016 | Frantic has triggered the antispam catcher
+[09/01/2018 17:14] INFO autorooms _room_for 174: 141955699461718016 | Frantic has NOT triggered the antispam catcher
+[09/01/2018 17:17] INFO autorooms _room_for 174: 303823596864667649 | MrDavidz has NOT triggered the antispam catcher
+[09/01/2018 17:18] INFO autorooms _room_for 174: 204251832258789377 | venomfrosty has NOT triggered the antispam catcher
+[09/01/2018 17:18] INFO autorooms _room_for 174: 204251832258789377 | venomfrosty has NOT triggered the antispam catcher
+[09/01/2018 17:20] INFO autorooms _room_for 171: 141955699461718016 | Frantic has triggered the antispam catcher

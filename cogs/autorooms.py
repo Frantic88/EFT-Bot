@@ -29,8 +29,9 @@ class AutoRoomAntiSpam:
 
     @property
     def spammy(self):
-        return self._interval_check(timedelta(seconds=5), 1) \
-            or self._interval_check(timedelta(minutes=1), 3)
+        # 5 time per 15 seconds and 5 times per minute. You need to know what you can add any number of checks, like 1, 2, 5, 10...Ok leave it as it is and we'll see.
+        return self._interval_check(timedelta(seconds=15), 5) \
+            or self._interval_check(timedelta(minutes=1), 10)
 
     def stamp(self):
         self.event_timestamps.append(datetime.utcnow())
