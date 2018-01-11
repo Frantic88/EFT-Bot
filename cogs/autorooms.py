@@ -1,6 +1,7 @@
 import pathlib
 from datetime import datetime, timedelta
 import logging
+import asyncio
 
 import discord
 from discord.ext import commands
@@ -29,9 +30,9 @@ class AutoRoomAntiSpam:
 
     @property
     def spammy(self):
-        # 5 time per 15 seconds and 5 times per minute. You need to know what you can add any number of checks, like 1, 2, 5, 10...Ok leave it as it is and we'll see.
-        return self._interval_check(timedelta(seconds=15), 5) \
-            or self._interval_check(timedelta(minutes=1), 10)
+        return self._interval_check(timedelta(seconds=5), 3) \
+            or self._interval_check(timedelta(minutes=1), 5) \
+            or self._interval_check(timedelta(hours=1), 30)
 
     def stamp(self):
         self.event_timestamps.append(datetime.utcnow())
@@ -49,17 +50,17 @@ class AutoRooms:
     auto spawn rooms
     """
     __author__ = "mikeshardmind (Sinbad#0413)"
-    __version__ = "5.0.2"
+    __version__ = "5.1.0"
 
     def __init__(self, bot: commands.bot):
         self.bot = bot
-        self._rooms = []  # List[discord.Channel]
         self._antispam = {}  # user_id -> AutoRoomAntiSpam
         try:
             self.settings = dataIO.load_json(path + '/settings.json')
         except Exception:
             self.settings = {}
         self._resume()
+        self._event_lock = asyncio.Lock()
 
     def save_json(self):
         dataIO.save_json(path + '/settings.json', self.settings)
@@ -78,11 +79,14 @@ class AutoRooms:
                 if channel is None:
                     rem_list.append(entry)
                     continue
-                self._rooms.append(channel.id)
+                else:
+                    self.settings[server.id]['clones'].append(channel.id)
+                    self.save_json()
             self.settings[server.id]['clones'] = [
                 entry for entry in self.settings[server.id]['clones']
                 if entry not in rem_list
             ]
+            self.save_json()
 
     async def _clone_channel(
             self, origin: discord.Channel, new_name: str, *overwrites):
@@ -149,14 +153,16 @@ class AutoRooms:
                 if vc_after.id in \
                         self.settings[vc_after.server.id]['channels'] \
                         and self.settings[vc_after.server.id]['toggleactive']:
-                    await self._room_for(memb_after)
+                    async with self._event_lock:
+                        await self._room_for(memb_after)
         except AttributeError:
             # 4-deep if nesting for None checking or this
             pass
 
         if memb_before.server is not None:
             if memb_before.server.id in self.settings:
-                await self._cleanup(memb_before.server)
+                async with self._event_lock:
+                    await self._cleanup(memb_before.server)
 
     async def _room_for(self, member: discord.Member):
         server = member.server
@@ -217,7 +223,6 @@ class AutoRooms:
             self.settings[server.id]['clones'].append(channel.id)
             self.save_json()
             self._antispam[member.id].stamp()
-            self._rooms.append(channel.id)
             try:
                 await self.bot.move_member(member, channel)
             except Exception as e:
@@ -227,22 +232,29 @@ class AutoRooms:
         rem_ids = []
         if not server.me.server_permissions.manage_channels:
             return
-        for channel_id in self._rooms:
+        for channel_id in self.settings[server.id]['clones']:
             channel = self.bot.get_channel(channel_id)
             if channel_id is None:
                 rem_ids.append(channel_id)
-                continue
-            if len(channel.voice_members) > 0 \
-                    or channel.created_at + timedelta(seconds=5) \
-                    > datetime.utcnow():
-                continue
-            try:
-                await self.bot.delete_channel(channel)
-            except Exception as e:
-                pass
             else:
-                rem_ids.append(channel_id)
-        self._rooms = [idx for idx in self._rooms if idx not in rem_ids]
+                try:
+                    if len(channel.voice_members) == 0 \
+                        and (channel.created_at + timedelta(seconds=2)) \
+                            < datetime.utcnow():
+                        try:
+                            await self.bot.delete_channel(channel)
+                        except Exception as e:
+                            pass
+                        else:
+                            rem_ids.append(channel_id)
+                except AttributeError:
+                    rem_ids.append(channel_id)
+
+        self.settings[server.id]['clones'] = [
+            idx for idx in self.settings[server.id]['clones']
+            if idx not in rem_ids
+        ]
+        self.save_json()
 
     def initial_config(self, server_id):
         """makes an entry for the server, defaults to turned off"""
