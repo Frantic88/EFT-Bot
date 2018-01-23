@@ -47,6 +47,11 @@
                 "atype" : "author",
                 "gameroom" : false,
                 "ownership" : null
+            },
+            "405344831192301578" : {
+                "atype" : "author",
+                "gameroom" : false,
+                "ownership" : null
             }
         },
         "clones" : [],
