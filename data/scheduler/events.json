@@ -3,7 +3,7 @@
         "trade_daily_purge" : {
             "author" : "141955699461718016",
             "channel" : "360709512925282314",
-            "command" : "cleanup after 383778076288352257",
+            "command" : "cleanup after 411514276411342858",
             "name" : "trade_daily_purge",
             "repeat" : true,
             "starttime" : 1513243768,

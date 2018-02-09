@@ -264,3 +264,26 @@ discord.errors.NotFound: NOT FOUND (status code: 404): Unknown Channel
 [09/01/2018 17:20] INFO autorooms _room_for 171: 141955699461718016 | Frantic has triggered the antispam catcher
 [10/01/2018 22:58] WARNING react_roles _init_bot_manipulation 144: Could not find channel with id 389762397243572225 in server None
 [23/01/2018 15:00] WARNING react_roles _init_bot_manipulation 145: Could not find channel with id 389762397243572225 in server None
+[26/01/2018 22:05] INFO autorooms _room_for 177: 141955699461718016 | Frantic has triggered the antispam catcher
+[26/01/2018 22:05] INFO autorooms _room_for 177: 141955699461718016 | Frantic has triggered the antispam catcher
+[26/01/2018 22:05] INFO autorooms _room_for 177: 141955699461718016 | Frantic has triggered the antispam catcher
+[26/01/2018 22:05] INFO autorooms _room_for 177: 141955699461718016 | Frantic has triggered the antispam catcher
+[26/01/2018 22:05] INFO autorooms _room_for 177: 141955699461718016 | Frantic has triggered the antispam catcher
+[27/01/2018 00:32] INFO autorooms _room_for 177: 113105616989351936 | BlncSL8[NA] has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 01:52] INFO autorooms _room_for 177: 224351117172015104 | The Ghost of Stonewall Jackson has triggered the antispam catcher
+[27/01/2018 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[28/01/2018 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[28/01/2018 16:01] INFO autorooms _room_for 177: 407172053700182016 | Htukatur has triggered the antispam catcher
+[29/01/2018 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
