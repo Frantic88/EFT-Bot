@@ -287,3 +287,31 @@ discord.errors.NotFound: NOT FOUND (status code: 404): Unknown Channel
 [28/01/2018 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
 [28/01/2018 16:01] INFO autorooms _room_for 177: 407172053700182016 | Htukatur has triggered the antispam catcher
 [29/01/2018 11:29] INFO scheduler run_coro 246: Running 'trade_daily_purge' in 146573551246245888
+[20/04/2018 20:44] ERROR red <module> 634: Fatal exception, attempting graceful logout
+Traceback (most recent call last):
+  File "red.py", line 613, in <module>
+    loop.run_until_complete(main(bot))
+  File "E:\Python\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "red.py", line 602, in main
+    yield from bot.connect()
+  File "lib\discord\client.py", line 448, in connect
+    yield from self.ws.poll_event()
+  File "lib\discord\gateway.py", line 426, in poll_event
+    yield from self.received_message(msg)
+  File "lib\discord\gateway.py", line 385, in received_message
+    func(data)
+  File "lib\discord\state.py", line 238, in parse_message_delete
+    self.messages.remove(found)
+ValueError: deque.remove(x): x not in deque
+[20/04/2018 20:45] WARNING react_roles _init_bot_manipulation 143: Could not find message 390488668701196308 in <#389762397243572225>
+[20/04/2018 20:54] WARNING react_roles _init_bot_manipulation 143: Could not find message 436939582617944093 in <#351640262096846849>
+[20/04/2018 20:54] WARNING react_roles _init_bot_manipulation 143: Could not find message 390488668701196308 in <#389762397243572225>
+[30/05/2018 16:17] WARNING react_roles _init_bot_manipulation 143: Could not find message 436939582617944093 in <#351640262096846849>
+[30/05/2018 16:17] WARNING react_roles _init_bot_manipulation 143: Could not find message 390488668701196308 in <#389762397243572225>
+[30/05/2018 16:39] WARNING react_roles _init_bot_manipulation 146: Could not find channel with id 351640262096846849 in server None
+[30/05/2018 16:39] WARNING react_roles _init_bot_manipulation 146: Could not find channel with id 389762397243572225 in server None
+[30/05/2018 16:50] WARNING react_roles _init_bot_manipulation 143: Could not find message 436939582617944093 in <#351640262096846849>
+[30/05/2018 16:50] WARNING react_roles _init_bot_manipulation 143: Could not find message 390488668701196308 in <#389762397243572225>
+[30/05/2018 16:53] WARNING react_roles _init_bot_manipulation 143: Could not find message 436939582617944093 in <#351640262096846849>
+[30/05/2018 16:53] WARNING react_roles _init_bot_manipulation 143: Could not find message 390488668701196308 in <#389762397243572225>
