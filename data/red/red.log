@@ -321,3 +321,7 @@ ValueError: deque.remove(x): x not in deque
 [30/05/2018 17:08] WARNING react_roles _init_bot_manipulation 143: Could not find message 390488668701196308 in <#389762397243572225>
 [15/06/2018 00:35] WARNING react_roles _init_bot_manipulation 143: Could not find message 436939582617944093 in <#351640262096846849>
 [15/06/2018 00:35] WARNING react_roles _init_bot_manipulation 143: Could not find message 390488668701196308 in <#389762397243572225>
+[15/08/2018 13:14] WARNING react_roles _init_bot_manipulation 143: Could not find message 436939582617944093 in <#351640262096846849>
+[15/08/2018 13:14] WARNING react_roles _init_bot_manipulation 143: Could not find message 390488668701196308 in <#389762397243572225>
+[15/08/2018 13:17] WARNING react_roles _init_bot_manipulation 143: Could not find message 436939582617944093 in <#351640262096846849>
+[15/08/2018 13:17] WARNING react_roles _init_bot_manipulation 143: Could not find message 390488668701196308 in <#389762397243572225>
