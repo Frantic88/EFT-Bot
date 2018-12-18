@@ -1,3 +1,13 @@
 {
-    "146573551246245888" : {}
+    "146573551246245888" : {
+        "lfgloopmsg" : {
+            "author" : "141955699461718016",
+            "channel" : "455047780440997898",
+            "command" : "send channel 189785337709592576 Before raiding together, be sure you have a plan for all eventualities relating to loot sorted out between yourself and the teammates.\nStaff of this server **do not** enforce any rules on looting. We do take teamkilling very seriously, and will ban for any intentional malicious teamkilling that can be proved (by video evidence).\n\nBelow you can find majority of the events that can occur and our __**recommended**__ ruleset.\n -> Killer has the claim on the loot. If the killer dies, loot belongs to everyone. If killer is unknown, loot belongs to everyone.\n -> Loot in containers is claimed by the person whom first opens it. What's left behind belongs to next person to open it and so on.\n -> Loot found laying around belongs to whoever picks it up first.\n -> Once a team member has died their loot is free for anyone to take. Though, try to be a good team mate and return it/drop it for insurance.",
+            "name" : "lfgloopmsg",
+            "repeat" : true,
+            "starttime" : 1545140950,
+            "timedelta" : 10800
+        }
+    }
 }
