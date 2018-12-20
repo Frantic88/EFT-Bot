@@ -50,7 +50,7 @@ class AutoRooms:
     auto spawn rooms
     """
     __author__ = "mikeshardmind (Sinbad#0001)"
-    __version__ = "5.1.0"
+    __version__ = "5.1.5"
 
     def __init__(self, bot: commands.bot):
         self.bot = bot
@@ -59,8 +59,11 @@ class AutoRooms:
             self.settings = dataIO.load_json(path + '/settings.json')
         except Exception:
             self.settings = {}
-        self._resume()
+            self._resumed = True
+        else:
+            self._resumed = False
         self._event_lock = asyncio.Lock()
+        log.info('AutoRooms succesfully loaded.')
 
     def save_json(self):
         dataIO.save_json(path + '/settings.json', self.settings)
@@ -70,23 +73,14 @@ class AutoRooms:
         handle getting state info on cog load
         """
         for server_id in self.settings:
-            rem_list = []
-            server = self.bot.get_server(server_id)
+            server = discord.utils.get(self.bot.servers, id=server_id)
             if server is None:
                 continue
-            for entry in self.settings[server.id]['clones']:
-                channel = self.bot.get_channel(entry)
-                if channel is None:
-                    rem_list.append(entry)
-                    continue
-                else:
-                    self.settings[server.id]['clones'].append(channel.id)
-                    self.save_json()
-            self.settings[server.id]['clones'] = [
-                entry for entry in self.settings[server.id]['clones']
-                if entry not in rem_list
-            ]
-            self.save_json()
+            self.settings[server.id]['clones'] = list(
+                set(self.settings[server.id]['clones']) & set([c.id for c in server.channels])
+            )
+        self.save_json()
+        self._resumed = True
 
     async def _clone_channel(
             self, origin: discord.Channel, new_name: str, *overwrites):
@@ -136,12 +130,15 @@ class AutoRooms:
                     guild_id=origin.server.id), json=payload)
         return discord.Channel(server=origin.server, **new_channeldata)
 
-    async def _autorooms(self, memb_before: discord.Member,
-                         memb_after: discord.Member):
+    async def on_voice_state_update(
+        self, memb_before: discord.Member, memb_after: discord.Member
+    ):
         """
         Detect voice state changes, and call the appropriate functions
         based on the change
         """
+        if not self._resumed:
+            self._resume()
 
         if memb_after.voice.voice_channel == memb_before.voice.voice_channel:
             # We don't care if the channel they are in hasn't changed
@@ -279,7 +276,7 @@ class AutoRooms:
         if ctx.invoked_subcommand is None:
             await self.bot.send_cmd_help(ctx)
 
-    @checks.admin_or_permissions(Manage_channels=True)
+    @checks.admin_or_permissions(manage_channels=True)
     @autoroomset.command(name="prepend", pass_context=True, no_pm=True)
     async def setprepend(self, ctx, prepend: str=""):
         """
@@ -297,7 +294,7 @@ class AutoRooms:
         self.save_json()
         await self.bot.say("Prepend set.")
 
-    @checks.admin_or_permissions(Manage_channels=True)
+    @checks.admin_or_permissions(manage_channels=True)
     @autoroomset.command(name="channelsettings", pass_context=True, no_pm=True)
     async def setchannelsettings(self, ctx, channel: discord.Channel):
         """
@@ -375,7 +372,7 @@ class AutoRooms:
             await self.bot.say("I can't wait forever, "
                                "I am not changing this setting")
         elif message.clean_content.lower()[:1] == '2':
-            [channel.id]['ownership'] \
+            self.settings[server.id]['chansettings'][channel.id]['ownership'] \
                 = True
         elif message.clean_content.lower()[:1] == '3':
             self.settings[server.id]['chansettings'][channel.id]['ownership'] \
@@ -387,7 +384,7 @@ class AutoRooms:
         self.save_json()
         await self.bot.say("Channel specific settings have been updated")
 
-    @checks.admin_or_permissions(Manage_channels=True)
+    @checks.admin_or_permissions(manage_channels=True)
     @autoroomset.command(name="toggleactive", pass_context=True, no_pm=True)
     async def autoroomtoggle(self, ctx):
         """
@@ -405,7 +402,7 @@ class AutoRooms:
             await self.bot.say('Auto Rooms enabled.')
         self.save_json()
 
-    @checks.admin_or_permissions(Manage_channels=True)
+    @checks.admin_or_permissions(manage_channels=True)
     @autoroomset.command(name="makeclone", pass_context=True, no_pm=True)
     async def makeclone(self, ctx, channel: discord.Channel):
         """Takes a channel, turns that voice channel into a clone source"""
@@ -427,7 +424,7 @@ class AutoRooms:
         else:
             await self.bot.say("That isn't a voice channel.")
 
-    @checks.admin_or_permissions(Manage_channels=True)
+    @checks.admin_or_permissions(manage_channels=True)
     @autoroomset.command(name="remclone", pass_context=True, no_pm=True)
     async def remclone(self, ctx, channel: discord.Channel):
         """Takes a channel, removes that channel from the clone list"""
@@ -444,7 +441,7 @@ class AutoRooms:
                                "\nHint: Use {}autoroomset listclones "
                                "for a current list.".format(prefix))
 
-    @checks.admin_or_permissions(Manage_channels=True)
+    @checks.admin_or_permissions(manage_channels=True)
     @autoroomset.command(name="listautorooms", pass_context=True, no_pm=True)
     async def listclones(self, ctx):
         """Lists the current autorooms"""
@@ -472,7 +469,7 @@ class AutoRooms:
             channels.remove(c)
             self.save_json
 
-    @checks.admin_or_permissions(Manage_channels=True)
+    @checks.admin_or_permissions(manage_channels=True)
     @autoroomset.command(name="toggleowner", pass_context=True, no_pm=True)
     async def toggleowner(self, ctx):
         """toggles if the creator of the autoroom owns it
@@ -495,5 +492,4 @@ class AutoRooms:
 def setup(bot):
     pathlib.Path(path).mkdir(parents=True, exist_ok=True)
     n = AutoRooms(bot)
-    bot.add_listener(n._autorooms, 'on_voice_state_update')
     bot.add_cog(n)

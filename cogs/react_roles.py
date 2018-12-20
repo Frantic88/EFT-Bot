@@ -9,6 +9,7 @@ import re
 import logging
 import itertools
 import contextlib
+import collections
 
 from discord.ext import commands
 from .utils import checks
@@ -68,12 +69,14 @@ Gave a total of {g} roles."""
     LINK_MESSAGE_NOT_FOUND = "The following messages weren't found: {}"
     LINK_CHANNEL_NOT_FOUND = "The following channels weren't found: {}"
     LINK_PAIR_INVALID = "The following channel-message pairs were invalid: {}"
+    NO_LINKED_MESSAGES_SPECIFIED = "You did not specify any channel-message pair"
     LINK_FAILED = ":x: Failed to link reactions.\n"
     LINK_SUCCESSFUL = ":white_check_mark: Successfully linked the reactions."
     LINK_NAME_TAKEN = ":x: That link name is already used in the current server. Remove it before assigning to it."
     UNLINK_NOT_FOUND = ":x: Could not find a link with that name in this server."
     UNLINK_SUCCESSFUL = ":white_check_mark: The link has been removed from this server."
     CANT_CHECK_LINKED = ":x: Cannot run a check on linked messages."
+    CANT_GIVE_ROLE = ":x: I can't give that role! Maybe it's higher than my own highest role?"
 
     def __init__(self, bot: discord.Client):
         self.bot = bot
@@ -86,7 +89,7 @@ Gave a total of {g} roles."""
         self.links = {}  # {server.id: {channel.id_message.id: [role]}}
         self.processing_wait_time = 0 if self.MAXIMUM_PROCESSED_PER_SECOND == 0 else 1/self.MAXIMUM_PROCESSED_PER_SECOND
         asyncio.ensure_future(self._init_bot_manipulation())
-        asyncio.ensure_future(self.process_role_queue())
+        self.role_processor = asyncio.ensure_future(self.process_role_queue())
     
     # Events
     async def on_reaction_add(self, reaction, user):
@@ -124,6 +127,7 @@ Gave a total of {g} roles."""
                         links.remove(pair)
     
     async def _init_bot_manipulation(self):
+        counter = collections.Counter()
         await self.bot.wait_until_ready()
         for server_id, server_conf in self.config.items():
             server = self.bot.get_server(server_id)
@@ -139,6 +143,7 @@ Gave a total of {g} roles."""
                                     role = discord.utils.get(server.roles, id=role_id)
                                     if role is not None:
                                         self.add_to_cache(server_id, channel_id, msg_id, emoji_str, role)
+                                        counter.update((channel.name, ))
                             else:
                                 self.logger.warning("Could not find message {} in {}".format(msg_id, channel.mention))
                     else:
@@ -149,10 +154,11 @@ Gave a total of {g} roles."""
                     self.parse_links(server_id, link_list.values())
             else:
                 self.logger.warning("Could not find server with id {}".format(server_id))
+        self.logger.info("Cached bindings: {}".format(", ".join(": ".join(map(str, pair)) for pair in counter.items())))
 
     def __unload(self):
         # This method is ran whenever the bot unloads this cog.
-        pass
+        self.role_processor.cancel()
     
     # Commands
     @commands.group(name="roles", pass_context=True, no_pm=True, invoke_without_command=True)
@@ -237,6 +243,8 @@ Gave a total of {g} roles."""
         if len(messages_not_found) > 0:
             confimation_msg += self.LINK_MESSAGE_NOT_FOUND.format(
                 ", ".join("{} in <#{}>".format(p[0], p[1]) for p in messages_not_found)) + "\n"
+        if len(linked_messages) == 0:
+            confimation_msg += self.NO_LINKED_MESSAGES_SPECIFIED
         if len(confimation_msg) > 0:
             response = self.LINK_FAILED + confimation_msg
         else:
@@ -288,12 +296,21 @@ Gave a total of {g} roles."""
                     except discord.HTTPException:  # Failed to find the emoji
                         response = self.EMOJI_NOT_FOUND
                     else:
-                        self.add_to_cache(server.id, channel.id, message_id, emoji_id, role)
-                        msg_conf[emoji_id] = role.id
-                        self.save_data()
-                        response = self.ROLE_SUCCESSFULLY_BOUND.format(str(emoji or emoji_id), channel.mention)
-                        if self.bot.get_cog("ClientModification") is None:
-                            response += self.NO_CLIENT_MODIFICATION
+                        try:
+                            await self.bot.add_roles(ctx.message.author, role)
+                            await self.bot.remove_roles(ctx.message.author, role)
+                        except (discord.Forbidden, discord.HTTPException):
+                            response = self.CANT_GIVE_ROLE
+                            await self.bot.remove_reaction(message, emoji or emoji_id, self.bot.user)
+                        else:
+                            self.add_to_cache(server.id, channel.id, message_id, emoji_id, role)
+                            msg_conf[emoji_id] = role.id
+                            self.save_data()
+                            response = self.ROLE_SUCCESSFULLY_BOUND.format(str(emoji or emoji_id), channel.mention)
+                            if self.bot.get_cog("ClientModification") is None:
+                                response += self.NO_CLIENT_MODIFICATION
+                            else:
+                                self.add_cache_message(message)
         await self.bot.send_message(ctx.message.channel, response)
     
     @_roles.command(name="remove", pass_context=True, no_pm=True)
@@ -421,7 +438,7 @@ Gave a total of {g} roles."""
     async def process_role_queue(self):  # This exists to update multiple roles at once when possible
         """Loops until the cog is unloaded and processes the role assignments when it can"""
         await self.bot.wait_until_ready()
-        with contextlib.suppress(RuntimeError):  # Suppress the "Event loop is closed" error
+        with contextlib.suppress(RuntimeError, asyncio.CancelledError):  # Suppress the "Event loop is closed" error
             while self == self.bot.get_cog(self.__class__.__name__):
                 key = await self.role_queue.get()
                 q = self.role_map.pop(key)
@@ -445,7 +462,7 @@ Gave a total of {g} roles."""
     async def safe_get_message(self, channel, message_id):
         try:
             result = await self.bot.get_message(channel, message_id)
-        except discord.errors.NotFound:
+        except discord.errors.DiscordException:
             result = None
         return result
 
@@ -461,7 +478,8 @@ Gave a total of {g} roles."""
             for entry in link:
                 channel_id, message_id = entry.split("_", 1)
                 role_list.update(self.get_all_roles_from_message(server_id, channel_id, message_id))
-                link_dict[entry] = role_list
+            for entry in link:
+                link_dict.setdefault(entry, set()).update(role_list)
         self.links[server_id] = link_dict
 
     def remove_links(self, server_id, name):
@@ -469,7 +487,12 @@ Gave a total of {g} roles."""
         link_dict = self.links.get(server_id, {})
         for entry in entry_list:
             if entry in link_dict:
-                del link_dict[entry]
+                channel_id, message_id = entry.split("_", 1)
+                role_list = set()
+                role_list.update(self.get_all_roles_from_message(server_id, channel_id, message_id))
+                link_dict[entry].difference_update(role_list)
+                if len(link_dict[entry]) == 0:
+                    del link_dict[entry]
 
     # Cache -- Needed to keep the actual role object in cache instead of looking for it every time in the server's roles
     def add_to_cache(self, server_id, channel_id, message_id, emoji_str, role):

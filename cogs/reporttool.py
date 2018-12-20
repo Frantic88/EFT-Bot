@@ -6,6 +6,7 @@ from discord.ext import commands
 from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
 from cogs.utils.chat_formatting import box, pagify
+from __main__ import settings
 
 path = 'data/reportool'
 
@@ -43,7 +44,7 @@ class ReportTool:
     """custom cog for a configureable report system."""
 
     __author__ = "mikeshardmind (Sinbad#0001)"
-    __version__ = "1.5.1"
+    __version__ = "1.6.1"
 
     def __init__(self, bot):
         self.bot = bot
@@ -72,14 +73,20 @@ class ReportTool:
                                         'output': [],
                                         'cleanup': False,
                                         'usercache': [],
-                                        'multiout': False
+                                        'multiout': False,
+                                        'mention': ""
                                         }
             self.save_json()
 
-    @checks.admin_or_permissions(Manage_server=True)
+    @checks.admin_or_permissions(manage_server=True)
     @setreport.command(name="output", pass_context=True, no_pm=True)
     async def setoutput(self, ctx, chan: discord.Channel):
-        """sets the output channel(s)"""
+        """
+        sets the output channel
+        
+        to set the output channel to one in a different server, please
+        use `reportset otherserveroutput`
+        """
         server = ctx.message.server
         if server.id not in self.settings:
             self.initial_config(server.id)
@@ -99,7 +106,66 @@ class ReportTool:
             self.save_json()
             return await self.bot.say("Channel set as output")
 
-    @checks.admin_or_permissions(Manage_server=True)
+    @checks.admin_or_permissions(manage_server=True)
+    @setreport.command(name="tag", pass_context=True, no_pm=True)
+    async def taginfo(self, ctx, *, info: str=""):
+        """
+        This adds info to each report. 
+
+        whether it be a mention, info about the source server 
+        (for use with cross server output) etc...
+        """
+        server = ctx.message.server
+        if server.id not in self.settings:
+            self.initial_config(server.id)
+
+        self.settings[server.id]['mention'] = info
+        await self.bot.say("Extra info set.")
+
+    @checks.admin_or_permissions(manage_server=True)
+    @setreport.command(name="otherserveroutput", pass_context=True, no_pm=True)
+    async def complexout(self, ctx, channel_id: str):
+        """
+        puts the output for the current server in another server.
+
+        This takes a channel ID
+
+        Be careful with managing this
+        """
+
+        server = ctx.message.server
+        if server.id not in self.settings:
+            self.initial_config(server.id)
+
+        chan = discord.utils.get(self.bot.get_all_channels(), id=channel_id)
+
+        if not (
+            checks.is_owner_check(ctx)
+            or checks.role_or_permissions(
+                lambda r: r.name.lower() == settings.get_server_admin(chan.server).lower(),
+                manage_server=True
+            )
+        ):
+            return await self.bot.say(
+                "You don't have the right permissions in the destination serverto do that!"
+            )
+
+        if chan.type != discord.ChannelType.text:
+            return await self.bot.say("That isn't a text channel")
+        if chan.id in self.settings[server.id]['output']:
+            return await self.bot.say("Channel already set as output")
+
+        if self.settings[server.id]['multiout']:
+            self.settings[server.id]['output'].append(chan.id)
+            self.save_json()
+            return await self.bot.say("Channel added to output list")
+        else:
+            self.settings[server.id]['output'] = [chan.id]
+            self.save_json()
+            return await self.bot.say("Channel set as output")
+
+
+    @checks.admin_or_permissions(manage_server=True)
     @setreport.command(name="toggleactive", pass_context=True, no_pm=True)
     async def report_toggle(self, ctx):
         """Toggles whether the Reporting tool is enabled or not"""
@@ -221,10 +287,12 @@ class ReportTool:
                       icon_url=avatar)
         em.set_footer(text='{0.id}'.format(author))
 
+        mention = self.settings[server.id].get('mention', "").strip() or None
+
         for output in self.settings[server.id]['output']:
-            where = server.get_channel(output)
+            where = discord.utils.get(self.bot.get_all_channels(), id=output)
             if where is not None:
-                    await self.bot.send_message(where, embed=em)
+                    await self.bot.send_message(where, embed=em, content=mention)
 
         self.settings[server.id]['usercache'].remove(author.id)
         self.save_json()

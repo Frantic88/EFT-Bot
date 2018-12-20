@@ -338,3 +338,19 @@ Below you can find majority of the events that can occur and our __**recommended
  -> Loot found laying around belongs to whoever picks it up first.
  -> Once a team member has died their loot is free for anyone to take. Though, try to be a good team mate and return it/drop it for insurance." to dev-botconsole on EFT Unofficial Community every 10800s
 [18/12/2018 15:49] INFO scheduler run_coro 246: Running 'lfgloopmsg' in 146573551246245888
+[21/12/2018 01:28] WARNING react_roles _init_bot_manipulation 146: Could not find channel with id 351640262096846849 in server None
+[21/12/2018 01:28] WARNING react_roles _init_bot_manipulation 146: Could not find channel with id 389762397243572225 in server None
+[21/12/2018 01:40] WARNING react_roles _init_bot_manipulation 146: Could not find channel with id 351640262096846849 in server None
+[21/12/2018 01:40] WARNING react_roles _init_bot_manipulation 146: Could not find channel with id 389762397243572225 in server None
+[21/12/2018 01:45] WARNING react_roles _init_bot_manipulation 151: Could not find channel with id 351640262096846849 in server None
+[21/12/2018 01:45] WARNING react_roles _init_bot_manipulation 151: Could not find channel with id 389762397243572225 in server None
+[21/12/2018 01:45] INFO react_roles _init_bot_manipulation 157: Cached bindings: 
+[21/12/2018 01:49] INFO scheduler _scheduler_repeat 180: add lfgloopmsg "send channel 189785337709592576 Before raiding together, be sure you have a plan for all eventualities relating to loot sorted out between yourself and the teammates.
+Staff of this server **do not** enforce any rules on looting. We do take teamkilling very seriously, and will ban for any intentional malicious teamkilling that can be proved (by video evidence).
+
+Below you can find majority of the events that can occur and our __**recommended**__ ruleset.
+ -> Killer has the claim on the loot. If the killer dies, loot belongs to everyone. If killer is unknown, loot belongs to everyone.
+ -> Loot in containers is claimed by the person whom first opens it. What's left behind belongs to next person to open it and so on.
+ -> Loot found laying around belongs to whoever picks it up first.
+ -> Once a team member has died their loot is free for anyone to take. Though, try to be a good team mate and return it/drop it for insurance." to dev-botconsole on EFT Unofficial Community every 10800s
+[21/12/2018 01:49] INFO scheduler run_coro 246: Running 'lfgloopmsg' in 146573551246245888
